@@ -11,14 +11,22 @@ package com.geostyx.finitecurrency;
  */
 
 import net.canarymod.Canary;
+import net.canarymod.logger.Logman;
 import net.canarymod.plugin.Plugin;
 
 public class FiniteCurrency extends Plugin{
+    public static Logman logger;
+    
+    public FiniteCurrency(){
+            FiniteCurrency.logger = getLogman();
+    }
+    
     @Override
     public boolean enable() {
+        
         Canary.hooks().registerListener(new FiniteListener(), this);
-        getLogman().info("Enabling "+getName() + " Version " + getVersion());
-        getLogman().info("Authored by "+getAuthor());
+        logger.info("Enabling "+getName() + " Version " + getVersion());
+        logger.info("Authored by "+getAuthor());
         return true;
     }
     
