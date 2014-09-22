@@ -4,13 +4,11 @@
  * and open the template in the editor.
  */
 package com.geostyx.finitecurrency;
-// test3
 /**
  *
  * @author Jacob
  */
 // import net.canarymod.hook.Hook;
-import java.util.Date;
 import java.util.HashMap;
 import net.canarymod.Canary;
 import net.canarymod.chat.Colors;
@@ -39,8 +37,6 @@ public class FiniteListener implements PluginListener {
         } catch (DatabaseReadException e) {
             //Whoops! Derp.
         }
-        // Test
-        // Test Again
         hook.getPlayer().message("HI!!!!");
         if (da.hasData()) {
             hook.getPlayer().message(String.valueOf(System.currentTimeMillis()) + " | " + String.valueOf(da.timestamp));
@@ -71,6 +67,7 @@ public class FiniteListener implements PluginListener {
             } else {
                 Database.get().insert(da);
             }
+            
         } catch (DatabaseWriteException e) {
             //Whoops! Derp.
             FiniteCurrency.logger.info(e.getMessage());
