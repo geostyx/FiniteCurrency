@@ -12,6 +12,7 @@ package com.geostyx.finitecurrency;
 // import net.canarymod.hook.Hook;
 import java.util.Date;
 import java.util.HashMap;
+import net.canarymod.Canary;
 import net.canarymod.chat.Colors;
 import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseReadException;
@@ -28,19 +29,21 @@ public class FiniteListener implements PluginListener {
         FiniteCurrency.logger.info("Player Joined: " + hook.getPlayer().getName());
         hook.getPlayer().message(Colors.YELLOW + "Hello World, " + hook.getPlayer().getName());
 
-        LogoutDataAccess da = new LogoutDataAccess();
+        LogoutAccess da = new LogoutAccess();
         try {
             //Read data and put it into our (currently empty) dataaccess instance
             // Database.get().load(da, new String[] {{"player_name"}, hook.getPlayer().getName()});
-            HashMap<String, Object> filter = new HashMap<String, Object>();
-            filter.put("player_name", hook.getPlayer().getName());
+            HashMap<String, Object> filter = new HashMap<>();
+            filter.put("player_uuid", hook.getPlayer().getUUIDString());
             Database.get().load(da, filter);
         } catch (DatabaseReadException e) {
             //Whoops! Derp.
         }
         if (da.hasData()) {
             hook.getPlayer().message(String.valueOf(System.currentTimeMillis()) + " | " + String.valueOf(da.timestamp));
-            hook.getPlayer().message("Your last login was " + ((System.currentTimeMillis()  - da.timestamp) / 1000L / 60 / 60) + " hours ago.");
+            hook.getPlayer().message("Name based on UUID: " + Colors.GREEN + Canary.getServer().getPlayerFromUUID(da.player) + " | String name: " + da.playername);
+
+            hook.getPlayer().message("Your last login was " + ((System.currentTimeMillis() - da.timestamp) / 1000L / 60 / 60) + " hours ago.");
         } else {
             hook.getPlayer().message("Welcome to our Server!");
         }
@@ -49,16 +52,27 @@ public class FiniteListener implements PluginListener {
 
     @HookHandler
     public void logout(DisconnectionHook hook) {
-        LogoutDataAccess da = new LogoutDataAccess();
-        da.player = hook.getPlayer().getName();
+        LogoutAccess da = new LogoutAccess();
+        da.player = hook.getPlayer().getUUIDString();
         da.timestamp = System.currentTimeMillis();
+        da.playername = hook.getPlayer().getName();
+        FiniteCurrency.logger.info("da.playername: " + da.playername);
 
         try {
-            HashMap<String, Object> filter = new HashMap<String, Object>();
-            filter.put("player_name", hook.getPlayer().getName());
-            Database.get().update(da, filter);
+            HashMap<String, Object> filter = new HashMap<>();
+            filter.put("player_uuid", hook.getPlayer().getUUIDString());
+            Database.get().load(da, filter);
+            if (da.hasData()) {
+                Database.get().update(da, filter);
+                FiniteCurrency.logger.info("UPDATED YAY");
+            } else {
+                Database.get().insert(da);
+            }
         } catch (DatabaseWriteException e) {
             //Whoops! Derp.
+            FiniteCurrency.logger.info(e.getMessage());
+        } catch (DatabaseReadException e) {
+
         }
     }
 }
