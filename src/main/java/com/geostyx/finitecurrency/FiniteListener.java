@@ -39,6 +39,7 @@ public class FiniteListener implements PluginListener {
         } catch (DatabaseReadException e) {
             //Whoops! Derp.
         }
+        // Test
         hook.getPlayer().message("HI!!!!");
         if (da.hasData()) {
             hook.getPlayer().message(String.valueOf(System.currentTimeMillis()) + " | " + String.valueOf(da.timestamp));
