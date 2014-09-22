@@ -37,7 +37,7 @@ public class FiniteListener implements PluginListener {
         } catch (DatabaseReadException e) {
             //Whoops! Derp.
         }
-        hook.getPlayer().message("HI!!!!");
+        hook.getPlayer().message("HI!!!! HOW ARE YOU BRO???");
         if (da.hasData()) {
             hook.getPlayer().message(String.valueOf(System.currentTimeMillis()) + " | " + String.valueOf(da.timestamp));
             hook.getPlayer().message("Name based on UUID: " + Colors.GREEN + Canary.getServer().getPlayerFromUUID(da.player) + " | String name: " + da.playername);
