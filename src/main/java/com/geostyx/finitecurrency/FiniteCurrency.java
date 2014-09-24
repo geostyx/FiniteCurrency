@@ -14,7 +14,7 @@ import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseWriteException;
 import net.canarymod.logger.Logman;
 import net.canarymod.plugin.Plugin;
-
+// test
 public class FiniteCurrency extends Plugin {
 
     public static Logman logger;
