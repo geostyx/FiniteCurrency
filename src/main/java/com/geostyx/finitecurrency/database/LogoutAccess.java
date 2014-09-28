@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.geostyx.finitecurrency;
+package com.geostyx.finitecurrency.database;
 
 /**
  *
@@ -11,22 +11,21 @@ package com.geostyx.finitecurrency;
  */
 
 import net.canarymod.database.Column;
-import net.canarymod.database.Column.DataType;
 import net.canarymod.database.DataAccess;
 
-public class LogoutAccess extends DataAccess {
+public class LogoutAccess extends WorldAccess {
     
     public LogoutAccess() {
-        super("player_last_logout");
+        super("fc_player_logout");
     }
 
-    @Column(columnName = "timestamp", dataType = DataType.LONG)
+    @Column(columnName = "timestamp", dataType = Column.DataType.LONG)
     public long timestamp;
 
-    @Column(columnName = "player_uuid", dataType = DataType.STRING)
+    @Column(columnName = "player_uuid", dataType = Column.DataType.STRING)
     public String player;
     
-    @Column(columnName = "player_name", dataType = DataType.STRING)
+    @Column(columnName = "player_name", dataType = Column.DataType.STRING)
     public String playername;
     
     @Override

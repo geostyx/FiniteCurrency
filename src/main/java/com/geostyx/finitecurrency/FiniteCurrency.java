@@ -7,8 +7,10 @@ package com.geostyx.finitecurrency;
 
 /**
  *
- * @author Jacob
+ * @author GeoStyx
  */
+import com.geostyx.finitecurrency.canary.listeners.FiniteListener;
+import com.geostyx.finitecurrency.database.LogoutAccess;
 import net.canarymod.Canary;
 import net.canarymod.database.Database;
 import net.canarymod.database.exceptions.DatabaseWriteException;
@@ -17,19 +19,24 @@ import net.canarymod.plugin.Plugin;
 
 public class FiniteCurrency extends Plugin {
 
-    public static Logman logger;
+    private static Logman logger;
 
     public FiniteCurrency() {
 
         FiniteCurrency.logger = getLogman();
     }
-
+    
+    public static Logman getLogger(){
+        return logger;
+    }
     @Override
     public boolean enable() {
 
         Canary.hooks().registerListener(new FiniteListener(), this);
+        
         logger.info("Enabling " + getName() + " Version " + getVersion());
         logger.info("Authored by " + getAuthor());
+        
         try {
             Database.get().updateSchema(new LogoutAccess());
         } catch (DatabaseWriteException e) {
