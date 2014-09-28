@@ -20,13 +20,13 @@ public class LogoutAccess extends WorldAccess {
     }
 
     @Column(columnName = "timestamp", dataType = Column.DataType.LONG)
-    public long timestamp;
+    public long timeStamp;
 
     @Column(columnName = "player_uuid", dataType = Column.DataType.STRING)
-    public String player;
+    public String playerUUID;
     
     @Column(columnName = "player_name", dataType = Column.DataType.STRING)
-    public String playername;
+    public String playerName;
     
     @Override
     public DataAccess getInstance() {
