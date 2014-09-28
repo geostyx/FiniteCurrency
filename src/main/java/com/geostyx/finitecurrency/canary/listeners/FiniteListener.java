@@ -57,8 +57,8 @@ public class FiniteListener implements PluginListener {
         da.player = hook.getPlayer().getUUIDString();
         da.timestamp = System.currentTimeMillis();
         da.playername = hook.getPlayer().getName();
+        da.world = hook.getPlayer().getWorld().getFqName();
         FiniteCurrency.getLogger().info("da.playername: " + da.playername);
-        // A comment 3
         try {
             HashMap<String, Object> filter = new HashMap<>();
             filter.put("player_uuid", hook.getPlayer().getUUIDString());
